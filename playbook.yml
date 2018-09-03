@@ -1,0 +1,9 @@
+- hosts: jenkins-n01.example.gov.nt.ca
+  remote user: eceadmin
+  sudo: yes
+  tasks: 
+  - name: install chromium-browser
+    package:
+      name: chromium-browser
+      state: latest
+
