@@ -1,0 +1,56 @@
+- hosts: jenkins-n01.example.gov.nt.ca
+  vars:
+    certname: 'jenkins-n01'
+    puppet_master: 'jenkins.example.gov.nt.ca'
+
+  become: true
+  tasks: 
+  - name: install packages curl,chromium-browser,unzip, wget
+    apt: name={{ item }} state=latest update_cache=yes
+    with_items:
+      - curl
+      - chromium-browser
+      - unzip
+      - wget
+
+  - name: Download Script to host
+    copy: src=get_chromedriver.sh dest=/tmp mode=0777
+
+  - name: Execute the script
+    command: sh /tmp/get_chromedriver.sh
+
+  - name: clean up
+    file:
+      state: absent
+      path: "/tmp/get_chromedriver.sh"
+
+  - name: Download Puppet Repository Package
+    get_url:
+      url="https://apt.puppetlabs.com/puppet-release-bionic.deb"
+      dest="/tmp/puppet-release-bionic.deb"
+
+  - name: Install Puppet Repostory
+    apt: deb="/tmp/puppet-release-bionic.deb"
+
+  - name: Clean up puppet repository package
+    file:  
+      state: absent
+      path: "/tmp/puppet-release-bionic.deb"
+
+  - name: Install Puppet Agent
+    apt: 
+      name: puppet
+      state: present
+      update_cache: yes    
+
+  - name: Update Puppet Agent Configuration
+    template:
+      src: puppet.conf.j2
+      dest: /etc/puppet/puppet.conf
+
+  - name: Enable Puppet Agent
+    service: 
+      name: puppet
+      state: started
+      enabled: yes
+
