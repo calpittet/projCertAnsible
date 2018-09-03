@@ -2,32 +2,15 @@
 
 echo "Begin Chrome Driver install script."
 
-if [ -z $SERVICE_USER -a -z $SERVICE_GROUP ]; then
-    # On maestro deploy, user should be specified with RUN_USER
-    # On domo vm deploy, user should be specified by SERVICE_USER
-    SERVICE_USER=$RUN_USER
-    SERVICE_GROUP=$RUN_USER
-fi
-
 CHROME_ZIP="chromedriver_linux64.zip"
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    echo "Detected Linux operating system"
-    CHROME_ZIP="chromedriver_linux64.zip"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "Detected OS X operating system"
-    CHROME_ZIP="chromedriver_mac32.zip"
-else
-    echo "ERROR: Unsupported operating system for DaVinci's Chrome Driver. Exiting now."
-    exit 1
-fi
-
+CHROME_HOME="/usr/bin/"
 CHROME_DRIVER="chromedriver"
-CHROME_DRIVER_VERSION="2.19"
+CHROME_DRIVER_VERSION="2.41"
 CHROME_DRIVER_URL="http://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/${CHROME_ZIP}"
 
 echo "Checking for Selenium Chrome driver at ./${CHROME_DRIVER}"
 if [ -f $CHROME_DRIVER ] ; then
-    echo "Chrome driver already installed."
+    echo "Chrome driver already downloaded."
 else
     TRIES=0
     while [ $TRIES -lt 5 -a ! -f $CHROME_DRIVER ]; do
@@ -72,5 +55,7 @@ else
         echo "ERROR: Unable to install Chrome driver, service has failed to start. Exiting now."
         exit 1
     fi
+  echo "Move chrome driver to /usr/bin directory"
+  mv -f $CHROME_DRIVER $CHROME_HOME
 fi
 
