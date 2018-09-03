@@ -1,6 +1,5 @@
 - hosts: jenkins-n01.example.gov.nt.ca
   vars:
-    certname: 'jenkins-n01'
     puppet_master: 'jenkins.example.gov.nt.ca'
 
   become: true
