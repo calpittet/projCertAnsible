@@ -1,6 +1,6 @@
 - hosts: jenkins-n01.example.gov.nt.ca
   vars:
-    puppet_master: 'jenkins.example.gov.nt.ca'
+    puppet_master: 'puppetmaster.example.gov.nt.ca'
 
   become: true
   tasks: 
