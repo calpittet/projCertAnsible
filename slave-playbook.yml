@@ -1,4 +1,4 @@
-- hosts: jenkins-n01.example.gov.nt.ca
+- hosts: n01.example.gov.nt.ca
   vars:
     puppet_master: 'puppetmaster.example.gov.nt.ca'
 
@@ -25,27 +25,27 @@
 
   - name: Download Puppet Repository Package
     get_url:
-      url="https://apt.puppetlabs.com/puppet-release-bionic.deb"
-      dest="/tmp/puppet-release-bionic.deb"
+      url="https://apt.puppetlabs.com/puppet-release-xenial.deb"
+      dest="/tmp/puppet-release-xenial.deb"
 
   - name: Install Puppet Repostory
-    apt: deb="/tmp/puppet-release-bionic.deb"
+    apt: deb="/tmp/puppet-release-xenial.deb"
 
   - name: Clean up puppet repository package
     file:  
       state: absent
-      path: "/tmp/puppet-release-bionic.deb"
+      path: "/tmp/puppet-release-xenial.deb"
 
   - name: Install Puppet Agent
     apt: 
-      name: puppet
+      name: puppet-agent
       state: present
       update_cache: yes    
 
   - name: Update Puppet Agent Configuration
     template:
       src: puppet.conf.j2
-      dest: /etc/puppet/puppet.conf
+      dest: /etc/puppetlabs/puppet/puppet.conf
 
   - name: Enable Puppet Agent
     service: 
