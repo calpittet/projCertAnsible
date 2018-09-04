@@ -1,10 +1,10 @@
 [main]
 ssldir = /var/lib/puppet/ssl
-server = {{ puppet_master }}
-
 
 [master]
 vardir = /var/lib/puppet
 cadir  = /var/lib/puppet/ssl/ca
 dns_alt_names = puppet
 
+[agent]
+server = {{ puppet_master }}
