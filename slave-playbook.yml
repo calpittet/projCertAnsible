@@ -50,6 +50,7 @@
   - name: Enable Puppet Agent
     service: 
       name: puppet
-      state: started
+      state: restarted
+
       enabled: yes
 
