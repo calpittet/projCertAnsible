@@ -38,7 +38,7 @@
 
   - name: Install Puppet Agent
     apt: 
-      name: puppet-agent
+      name: puppet
       state: present
       update_cache: yes    
 
