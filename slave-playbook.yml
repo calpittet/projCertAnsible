@@ -45,7 +45,7 @@
   - name: Update Puppet Agent Configuration
     template:
       src: puppet.conf.j2
-      dest: /etc/puppetlabs/puppet/puppet.conf
+      dest: /etc/puppet/puppet.conf
 
   - name: Enable Puppet Agent
     service: 
