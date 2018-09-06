@@ -56,5 +56,5 @@
       enabled: yes 
  
   - name: Enable Puppet Agent
-    command: /user/bin/puppet agent --enable
+    command: /usr/bin/puppet agent --enable
 
